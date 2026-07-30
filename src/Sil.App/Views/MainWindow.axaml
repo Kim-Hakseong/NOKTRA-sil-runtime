@@ -1,0 +1,272 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:Sil.App.ViewModels"
+        xmlns:views="using:Sil.App.Views"
+        x:Class="Sil.App.Views.MainWindow"
+        x:DataType="vm:MainWindowViewModel"
+        Title="Noktra SIL Runtime"
+        Width="1280" Height="820"
+        MinWidth="1000" MinHeight="660"
+        Background="{StaticResource NkCanvas}">
+
+  <Border Background="{StaticResource NkCanvas}">
+    <Grid RowDefinitions="Auto,Auto,*,Auto,Auto" Margin="18,16,18,0">
+
+    <!-- ================= Wordmark + run control ================= -->
+    <Grid Grid.Row="0" ColumnDefinitions="Auto,*,Auto" Margin="2,0,2,14">
+
+      <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center">
+        <TextBlock FontFamily="{StaticResource NkSerifFont}" FontSize="19" FontWeight="Bold"
+                   Foreground="{StaticResource NkWordmark}" Text="Noktra" VerticalAlignment="Center" />
+        <TextBlock FontFamily="{StaticResource NkSerifFont}" FontSize="19"
+                   Foreground="{StaticResource NkWordmarkSoft}" Text=" SIL Runtime"
+                   VerticalAlignment="Center" />
+        <Border Classes="chip-outline" Margin="14,0,0,0">
+          <TextBlock Text="FIXED-CYCLE EXECUTOR" />
+        </Border>
+      </StackPanel>
+
+      <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center">
+        <TextBlock Classes="micro" Text="MODE" VerticalAlignment="Center" Margin="0,0,8,0" />
+        <Border Classes="chip">
+          <TextBlock Text="{Binding TimingModeText}" />
+        </Border>
+        <Border Classes="chip-accent" Margin="6,0,0,0">
+          <TextBlock Text="{Binding StateText}" />
+        </Border>
+      </StackPanel>
+    </Grid>
+
+    <!-- ================= Toolbar ================= -->
+    <Border Grid.Row="1" Classes="panel" Padding="14,12" Margin="0,0,0,12">
+      <Grid ColumnDefinitions="Auto,Auto,*,Auto">
+
+        <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center">
+          <Button Classes="action primary" Content="Start" Command="{Binding StartCommand}" />
+          <Button Classes="action" Content="Pause" Command="{Binding PauseCommand}" />
+          <Button Classes="action" Content="Step" Command="{Binding StepOnceCommand}" />
+          <Button Classes="action" Content="Reset" Command="{Binding ResetCommand}" />
+        </StackPanel>
+
+        <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center"
+                    Margin="20,0,0,0">
+          <TextBlock Classes="micro" Text="RATE" VerticalAlignment="Center" Margin="0,0,8,0" />
+          <ComboBox Classes="nk" ItemsSource="{Binding Rates}" SelectedItem="{Binding RateHz}"
+                    MinWidth="86" IsEnabled="{Binding !IsRunning}" />
+          <TextBlock Classes="micro" Text="HZ" VerticalAlignment="Center" Margin="8,0,0,0" />
+          <TextBlock Classes="note" Text="{Binding StepSizeText}" VerticalAlignment="Center"
+                     Margin="16,0,0,0" />
+          <CheckBox Classes="nk" Content="Sync to wall clock" Margin="20,0,0,0"
+                    IsChecked="{Binding SyncToWallClock}" IsEnabled="{Binding !IsRunning}" />
+        </StackPanel>
+
+        <StackPanel Grid.Column="3" Orientation="Horizontal" VerticalAlignment="Center">
+          <StackPanel Margin="0,0,22,0">
+            <TextBlock Classes="micro" Text="SIM TIME" />
+            <TextBlock Classes="readout-lg" Text="{Binding SimulationTimeText}" MinWidth="92" />
+          </StackPanel>
+          <StackPanel>
+            <TextBlock Classes="micro" Text="CYCLE" />
+            <TextBlock Classes="readout-lg" Text="{Binding StepCountText}" MinWidth="78" />
+          </StackPanel>
+        </StackPanel>
+      </Grid>
+    </Border>
+
+    <!-- ================= Body ================= -->
+    <Grid Grid.Row="2" ColumnDefinitions="300,12,*,12,300">
+
+      <!-- == Project tree == -->
+      <Border Grid.Column="0" Classes="panel">
+        <DockPanel>
+          <StackPanel DockPanel.Dock="Top">
+            <TextBlock Classes="micro" Text="PROJECT" />
+            <TextBlock Classes="title" Text="Scenario" Margin="0,4,0,6" />
+            <Line Classes="ticks" StartPoint="0,0" EndPoint="120,0" HorizontalAlignment="Left"
+                  Margin="0,0,0,10" />
+            <TextBlock Classes="body" FontWeight="SemiBold" Text="{Binding ScenarioTitle}"
+                       TextWrapping="Wrap" />
+            <TextBlock Classes="note" Text="{Binding ScenarioDescription}" TextWrapping="Wrap"
+                       Margin="0,4,0,12" FontSize="10" />
+          </StackPanel>
+
+          <TreeView Classes="nk" ItemsSource="{Binding ProjectTree}">
+            <TreeView.ItemTemplate>
+              <TreeDataTemplate ItemsSource="{Binding Children}" x:DataType="vm:ProjectNodeViewModel">
+                <StackPanel Orientation="Horizontal">
+                  <TextBlock Text="{Binding Title}" FontSize="11"
+                             Foreground="{StaticResource NkSoftInk}" />
+                  <TextBlock Classes="micro" Text="{Binding Detail}" Margin="8,2,0,0"
+                             IsVisible="{Binding HasDetail}" />
+                </StackPanel>
+              </TreeDataTemplate>
+            </TreeView.ItemTemplate>
+          </TreeView>
+        </DockPanel>
+      </Border>
+
+      <!-- == Live trace == -->
+      <Border Grid.Column="2" Classes="panel">
+        <DockPanel>
+          <Grid DockPanel.Dock="Top" ColumnDefinitions="*,Auto">
+            <StackPanel Grid.Column="0">
+              <TextBlock Classes="micro" Text="ACQUISITION" />
+              <TextBlock Classes="title" Text="Live trace" Margin="0,4,0,0" />
+            </StackPanel>
+            <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Bottom">
+              <Border Classes="chip-outline">
+                <TextBlock Text="{Binding RateText}" />
+              </Border>
+              <Border Classes="chip-outline" Margin="6,0,0,0">
+                <TextBlock Text="RING 2000" />
+              </Border>
+            </StackPanel>
+          </Grid>
+
+          <Line DockPanel.Dock="Top" Classes="ticks" StartPoint="0,0" EndPoint="160,0"
+                HorizontalAlignment="Left" Margin="0,8,0,10" />
+
+          <Panel>
+            <TextBlock Classes="ghost" Text="SIL" HorizontalAlignment="Right"
+                       VerticalAlignment="Top" Margin="0,6,16,0" />
+            <views:TraceChart Name="Chart" Traces="{Binding Traces}" />
+          </Panel>
+        </DockPanel>
+      </Border>
+
+      <!-- == Channels == -->
+      <Border Grid.Column="4" Classes="panel">
+        <DockPanel>
+          <StackPanel DockPanel.Dock="Top">
+            <TextBlock Classes="micro" Text="INSTRUMENTATION" />
+            <TextBlock Classes="title" Text="Channels" Margin="0,4,0,8" />
+          </StackPanel>
+
+          <!-- Dial for the headline channel. -->
+          <views:DialGauge DockPanel.Dock="Top" Height="128" Margin="0,0,0,10"
+                           Fraction="{Binding PrimaryChannel.GaugeFraction, FallbackValue=0}"
+                           ValueText="{Binding PrimaryChannel.ValueText, FallbackValue=''}"
+                           UnitText="{Binding PrimaryChannel.Unit, FallbackValue=''}"
+                           Label="{Binding PrimaryChannel.Name, FallbackValue=''}"
+                           IsAlarm="{Binding PrimaryChannel.InViolation, FallbackValue=False}" />
+
+          <ScrollViewer VerticalScrollBarVisibility="Auto">
+            <ItemsControl ItemsSource="{Binding Channels}">
+              <ItemsControl.ItemTemplate>
+                <DataTemplate x:DataType="vm:ChannelRowViewModel">
+                  <Border Classes="sunk" Padding="11,7" Margin="0,0,0,6">
+                    <StackPanel>
+                      <Grid ColumnDefinitions="*,Auto">
+                        <TextBlock Grid.Column="0" Classes="micro-ink"
+                                   Text="{Binding Name}" VerticalAlignment="Center" />
+                        <TextBlock Grid.Column="1" Classes="readout" Text="{Binding ValueText}" />
+                      </Grid>
+
+                      <Border Background="{StaticResource NkFaintLine}" CornerRadius="2.5"
+                              Height="5" Margin="0,7,0,5">
+                        <ProgressBar Classes="gauge" Minimum="0" Maximum="1"
+                                     Value="{Binding GaugeFraction}"
+                                     Classes.out-of-limits="{Binding InViolation}" />
+                      </Border>
+
+                      <Grid ColumnDefinitions="Auto,*,Auto">
+                        <TextBlock Grid.Column="0" Classes="micro" Text="{Binding Unit}" />
+                        <TextBlock Grid.Column="1" Classes="micro" Text="{Binding LimitText}"
+                                   HorizontalAlignment="Right" Margin="0,0,6,0" />
+                        <Border Grid.Column="2" Classes="chip-alarm" IsVisible="{Binding InViolation}">
+                          <TextBlock Text="OUT" />
+                        </Border>
+                      </Grid>
+                    </StackPanel>
+                  </Border>
+                </DataTemplate>
+              </ItemsControl.ItemTemplate>
+            </ItemsControl>
+          </ScrollViewer>
+        </DockPanel>
+      </Border>
+    </Grid>
+
+    <!-- ================= Result ================= -->
+    <Border Grid.Row="3" Classes="panel" Margin="0,12,0,0" MaxHeight="216">
+      <Grid ColumnDefinitions="330,20,*">
+
+        <StackPanel Grid.Column="0">
+          <TextBlock Classes="micro" Text="JUDGEMENT" />
+          <Grid ColumnDefinitions="Auto,Auto" Margin="0,4,0,10">
+            <TextBlock Grid.Column="0" Classes="title" Text="Result" VerticalAlignment="Center" />
+            <Border Grid.Column="1" Margin="12,4,0,0"
+                    Classes.chip-accent="{Binding !IsFailing}"
+                    Classes.chip-alarm="{Binding IsFailing}">
+              <TextBlock Text="{Binding VerdictText}" />
+            </Border>
+          </Grid>
+
+          <Border Classes="statrow">
+            <Grid ColumnDefinitions="*,Auto">
+              <TextBlock Grid.Column="0" Classes="statlabel" Text="SAMPLES EVALUATED" />
+              <TextBlock Grid.Column="1" Classes="statvalue" Text="{Binding SamplesText}" />
+            </Grid>
+          </Border>
+          <Border Classes="statrow">
+            <Grid ColumnDefinitions="*,Auto">
+              <TextBlock Grid.Column="0" Classes="statlabel" Text="LIMIT EXCURSIONS" />
+              <TextBlock Grid.Column="1" Classes="statvalue" Text="{Binding ViolationCountText}" />
+            </Grid>
+          </Border>
+          <Border Classes="statrow">
+            <Grid ColumnDefinitions="*,Auto">
+              <TextBlock Grid.Column="0" Classes="statlabel" Text="CYCLE OVERRUNS" />
+              <TextBlock Grid.Column="1" Classes="statvalue" Text="{Binding OverrunText}" />
+            </Grid>
+          </Border>
+          <Border Classes="statrow" Margin="0">
+            <Grid ColumnDefinitions="*,Auto">
+              <TextBlock Grid.Column="0" Classes="statlabel" Text="SIM TIME" />
+              <TextBlock Grid.Column="1" Classes="statvalue" Text="{Binding SimulationTimeText}" />
+            </Grid>
+          </Border>
+        </StackPanel>
+
+        <StackPanel Grid.Column="2">
+          <TextBlock Classes="micro" Text="EXCURSION LOG" Margin="0,0,0,8" />
+
+          <TextBlock Classes="note" FontSize="10" IsVisible="{Binding !HasViolations}"
+                     Text="No channel has left its acceptance band." />
+
+          <ScrollViewer VerticalScrollBarVisibility="Auto" MaxHeight="126"
+                        IsVisible="{Binding HasViolations}">
+            <ItemsControl ItemsSource="{Binding Violations}">
+              <ItemsControl.ItemTemplate>
+                <DataTemplate x:DataType="x:String">
+                  <Border Classes="sunk" Padding="9,5" Margin="0,0,0,4">
+                    <TextBlock Text="{Binding}" FontFamily="{StaticResource NkMonoFont}"
+                               FontSize="10" Foreground="{StaticResource NkAlarm}"
+                               TextWrapping="Wrap" />
+                  </Border>
+                </DataTemplate>
+              </ItemsControl.ItemTemplate>
+            </ItemsControl>
+          </ScrollViewer>
+        </StackPanel>
+      </Grid>
+    </Border>
+
+    <!-- ================= Legal bar ================= -->
+    <Border Grid.Row="4" Background="{StaticResource NkLegalBar}" CornerRadius="4"
+            Padding="14,7" Margin="0,12,0,14">
+      <Grid ColumnDefinitions="*,Auto">
+        <TextBlock Grid.Column="0" FontSize="9" Foreground="{StaticResource NkWordmarkSoft}"
+                   VerticalAlignment="Center"
+                   Text="© 2026 noktra · offline-first verification tools · all rights reserved" />
+        <StackPanel Grid.Column="1" Orientation="Horizontal">
+          <TextBlock FontFamily="{StaticResource NkSerifFont}" FontSize="11" FontWeight="Bold"
+                     Foreground="{StaticResource NkWordmark}" Text="Noktra" />
+          <TextBlock FontFamily="{StaticResource NkSerifFont}" FontSize="11"
+                     Foreground="{StaticResource NkWordmarkSoft}" Text=" SIL Runtime" />
+        </StackPanel>
+      </Grid>
+      </Border>
+    </Grid>
+  </Border>
+</Window>

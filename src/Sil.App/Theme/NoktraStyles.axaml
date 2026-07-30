@@ -1,0 +1,263 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+  <!--
+    Noktra component styles. Three rules hold this together:
+      1. One accent. Teal marks live values and nothing else.
+      2. A black chip is a name tag. Only things that *name* something get a black background;
+         black is never used for general emphasis.
+      3. 9px uppercase micro labels carry the texture, and each panel gets exactly one bold title.
+  -->
+
+  <!-- ============================ Micro labels ============================ -->
+
+  <Style Selector="TextBlock.micro">
+    <Setter Property="FontSize" Value="{StaticResource NkMicroSize}" />
+    <Setter Property="LetterSpacing" Value="1.7" />
+    <Setter Property="Foreground" Value="{StaticResource NkMuted}" />
+    <Setter Property="FontWeight" Value="Medium" />
+  </Style>
+
+  <Style Selector="TextBlock.micro-ink">
+    <Setter Property="FontSize" Value="{StaticResource NkMicroSize}" />
+    <Setter Property="LetterSpacing" Value="1.7" />
+    <Setter Property="Foreground" Value="{StaticResource NkSoftInk}" />
+    <Setter Property="FontWeight" Value="SemiBold" />
+  </Style>
+
+  <!-- One bold title per panel. -->
+  <Style Selector="TextBlock.title">
+    <Setter Property="FontSize" Value="{StaticResource NkTitleSize}" />
+    <Setter Property="FontWeight" Value="Bold" />
+    <Setter Property="Foreground" Value="{StaticResource NkInk}" />
+    <Setter Property="LineHeight" Value="28" />
+  </Style>
+
+  <Style Selector="TextBlock.body">
+    <Setter Property="FontSize" Value="{StaticResource NkReadoutSize}" />
+    <Setter Property="Foreground" Value="{StaticResource NkSoftInk}" />
+  </Style>
+
+  <Style Selector="TextBlock.note">
+    <Setter Property="FontSize" Value="{StaticResource NkReadoutSize}" />
+    <Setter Property="Foreground" Value="{StaticResource NkMuted}" />
+  </Style>
+
+  <!-- Numeric readouts are monospace so columns of digits line up. -->
+  <Style Selector="TextBlock.readout">
+    <Setter Property="FontFamily" Value="{StaticResource NkMonoFont}" />
+    <Setter Property="FontSize" Value="{StaticResource NkReadoutSize}" />
+    <Setter Property="Foreground" Value="{StaticResource NkInk}" />
+  </Style>
+
+  <Style Selector="TextBlock.readout-lg">
+    <Setter Property="FontFamily" Value="{StaticResource NkMonoFont}" />
+    <Setter Property="FontSize" Value="{StaticResource NkReadoutLargeSize}" />
+    <Setter Property="Foreground" Value="{StaticResource NkInk}" />
+  </Style>
+
+  <!-- Large low-contrast watermark. -->
+  <Style Selector="TextBlock.ghost">
+    <Setter Property="FontSize" Value="{StaticResource NkGhostSize}" />
+    <Setter Property="FontWeight" Value="Bold" />
+    <Setter Property="Foreground" Value="#240E1113" />
+    <Setter Property="LetterSpacing" Value="2" />
+    <Setter Property="IsHitTestVisible" Value="False" />
+  </Style>
+
+  <!-- ============================== Surfaces ============================== -->
+
+  <Style Selector="Border.panel">
+    <Setter Property="Background" Value="{StaticResource NkPanel}" />
+    <Setter Property="CornerRadius" Value="10" />
+    <Setter Property="Padding" Value="16" />
+    <Setter Property="BorderBrush" Value="{StaticResource NkPanelEdge}" />
+    <Setter Property="BorderThickness" Value="1" />
+    <Setter Property="BoxShadow" Value="0 2 10 0 #22000000" />
+  </Style>
+
+  <!-- Recessed face: selected rows, input backgrounds, plot beds. -->
+  <Style Selector="Border.sunk">
+    <Setter Property="Background" Value="{StaticResource NkSunk}" />
+    <Setter Property="CornerRadius" Value="6" />
+    <Setter Property="BorderBrush" Value="{StaticResource NkLine}" />
+    <Setter Property="BorderThickness" Value="1" />
+  </Style>
+
+  <!-- ================================ Chips ================================ -->
+  <!-- Name tags only. -->
+
+  <Style Selector="Border.chip">
+    <Setter Property="Background" Value="{StaticResource NkInk}" />
+    <Setter Property="CornerRadius" Value="3" />
+    <Setter Property="Padding" Value="7,2,7,3" />
+    <Setter Property="VerticalAlignment" Value="Center" />
+  </Style>
+
+  <Style Selector="Border.chip > TextBlock">
+    <Setter Property="FontSize" Value="{StaticResource NkMicroSize}" />
+    <Setter Property="LetterSpacing" Value="1.7" />
+    <Setter Property="FontWeight" Value="SemiBold" />
+    <Setter Property="Foreground" Value="#F3F4F5" />
+  </Style>
+
+  <Style Selector="Border.chip-accent">
+    <Setter Property="Background" Value="{StaticResource NkAccent}" />
+    <Setter Property="CornerRadius" Value="3" />
+    <Setter Property="Padding" Value="7,2,7,3" />
+    <Setter Property="VerticalAlignment" Value="Center" />
+  </Style>
+
+  <Style Selector="Border.chip-accent > TextBlock">
+    <Setter Property="FontSize" Value="{StaticResource NkMicroSize}" />
+    <Setter Property="LetterSpacing" Value="1.7" />
+    <Setter Property="FontWeight" Value="SemiBold" />
+    <Setter Property="Foreground" Value="#FFFFFF" />
+  </Style>
+
+  <Style Selector="Border.chip-alarm">
+    <Setter Property="Background" Value="{StaticResource NkAlarm}" />
+    <Setter Property="CornerRadius" Value="3" />
+    <Setter Property="Padding" Value="7,2,7,3" />
+    <Setter Property="VerticalAlignment" Value="Center" />
+  </Style>
+
+  <Style Selector="Border.chip-alarm > TextBlock">
+    <Setter Property="FontSize" Value="{StaticResource NkMicroSize}" />
+    <Setter Property="LetterSpacing" Value="1.7" />
+    <Setter Property="FontWeight" Value="SemiBold" />
+    <Setter Property="Foreground" Value="#FFFFFF" />
+  </Style>
+
+  <Style Selector="Border.chip-outline">
+    <Setter Property="Background" Value="Transparent" />
+    <Setter Property="BorderBrush" Value="{StaticResource NkMuted}" />
+    <Setter Property="BorderThickness" Value="1" />
+    <Setter Property="CornerRadius" Value="3" />
+    <Setter Property="Padding" Value="6,1,6,2" />
+    <Setter Property="VerticalAlignment" Value="Center" />
+  </Style>
+
+  <Style Selector="Border.chip-outline > TextBlock">
+    <Setter Property="FontSize" Value="{StaticResource NkMicroSize}" />
+    <Setter Property="LetterSpacing" Value="1.7" />
+    <Setter Property="Foreground" Value="{StaticResource NkMuted}" />
+  </Style>
+
+  <!-- ============================= Stat rows ============================= -->
+  <!-- Dark row, label left, value right-aligned. The signature element. -->
+
+  <Style Selector="Border.statrow">
+    <Setter Property="Background" Value="{StaticResource NkSoftInk}" />
+    <Setter Property="CornerRadius" Value="3" />
+    <Setter Property="Padding" Value="10,5" />
+    <Setter Property="Margin" Value="0,0,0,3" />
+  </Style>
+
+  <Style Selector="Border.statrow TextBlock.statlabel">
+    <Setter Property="FontSize" Value="{StaticResource NkMicroSize}" />
+    <Setter Property="LetterSpacing" Value="1.7" />
+    <Setter Property="Foreground" Value="#9AA1A4" />
+    <Setter Property="VerticalAlignment" Value="Center" />
+  </Style>
+
+  <Style Selector="Border.statrow TextBlock.statvalue">
+    <Setter Property="FontFamily" Value="{StaticResource NkMonoFont}" />
+    <Setter Property="FontSize" Value="{StaticResource NkReadoutSize}" />
+    <Setter Property="Foreground" Value="#F3F4F5" />
+    <Setter Property="HorizontalAlignment" Value="Right" />
+    <Setter Property="VerticalAlignment" Value="Center" />
+  </Style>
+
+  <!-- ============================ Tick ruler ============================ -->
+  <!-- Thick dashed line reading as a ruler edge. -->
+
+  <Style Selector="Line.ticks">
+    <Setter Property="Stroke" Value="{StaticResource NkLine}" />
+    <Setter Property="StrokeThickness" Value="7" />
+    <Setter Property="StrokeDashArray" Value="0.14,0.72" />
+  </Style>
+
+  <!-- ============================== Controls ============================== -->
+
+  <Style Selector="Button.action">
+    <Setter Property="Background" Value="{StaticResource NkPanelEdge}" />
+    <Setter Property="BorderBrush" Value="{StaticResource NkLine}" />
+    <Setter Property="BorderThickness" Value="1" />
+    <Setter Property="CornerRadius" Value="4" />
+    <Setter Property="Padding" Value="14,6" />
+    <Setter Property="MinWidth" Value="74" />
+    <Setter Property="Margin" Value="0,0,6,0" />
+    <Setter Property="FontSize" Value="{StaticResource NkReadoutSize}" />
+    <Setter Property="FontWeight" Value="Medium" />
+    <Setter Property="Foreground" Value="{StaticResource NkInk}" />
+    <Setter Property="HorizontalContentAlignment" Value="Center" />
+  </Style>
+
+  <Style Selector="Button.action:pointerover /template/ ContentPresenter">
+    <Setter Property="Background" Value="{StaticResource NkWash}" />
+    <Setter Property="BorderBrush" Value="{StaticResource NkAccent}" />
+  </Style>
+
+  <Style Selector="Button.action:pressed /template/ ContentPresenter">
+    <Setter Property="Background" Value="{StaticResource NkAccent}" />
+    <Setter Property="TextBlock.Foreground" Value="#FFFFFF" />
+  </Style>
+
+  <Style Selector="Button.action:disabled /template/ ContentPresenter">
+    <Setter Property="Background" Value="{StaticResource NkSunk}" />
+    <Setter Property="TextBlock.Foreground" Value="{StaticResource NkReserved}" />
+  </Style>
+
+  <!-- Primary action carries the accent. -->
+  <Style Selector="Button.action.primary">
+    <Setter Property="Background" Value="{StaticResource NkAccent}" />
+    <Setter Property="BorderBrush" Value="{StaticResource NkAccent}" />
+    <Setter Property="Foreground" Value="#FFFFFF" />
+  </Style>
+
+  <Style Selector="Button.action.primary:pointerover /template/ ContentPresenter">
+    <Setter Property="Background" Value="{StaticResource NkAccentBright}" />
+    <Setter Property="TextBlock.Foreground" Value="#FFFFFF" />
+  </Style>
+
+  <Style Selector="ComboBox.nk">
+    <Setter Property="Background" Value="{StaticResource NkPanelEdge}" />
+    <Setter Property="BorderBrush" Value="{StaticResource NkLine}" />
+    <Setter Property="CornerRadius" Value="4" />
+    <Setter Property="FontFamily" Value="{StaticResource NkMonoFont}" />
+    <Setter Property="FontSize" Value="{StaticResource NkReadoutSize}" />
+    <Setter Property="Foreground" Value="{StaticResource NkInk}" />
+    <Setter Property="Padding" Value="8,4" />
+    <Setter Property="MinHeight" Value="28" />
+  </Style>
+
+  <Style Selector="CheckBox.nk">
+    <Setter Property="FontSize" Value="{StaticResource NkReadoutSize}" />
+    <Setter Property="Foreground" Value="{StaticResource NkSoftInk}" />
+    <Setter Property="MinHeight" Value="0" />
+  </Style>
+
+  <Style Selector="TreeView.nk">
+    <Setter Property="Background" Value="Transparent" />
+    <Setter Property="BorderThickness" Value="0" />
+  </Style>
+
+  <Style Selector="TreeViewItem">
+    <Setter Property="MinHeight" Value="22" />
+  </Style>
+
+  <!-- Bar gauge: accent fill on a recessed track. -->
+  <Style Selector="ProgressBar.gauge">
+    <Setter Property="Height" Value="5" />
+    <Setter Property="CornerRadius" Value="2.5" />
+    <Setter Property="Background" Value="Transparent" />
+    <Setter Property="Foreground" Value="{StaticResource NkAccent}" />
+    <Setter Property="MinWidth" Value="0" />
+  </Style>
+
+  <Style Selector="ProgressBar.gauge.out-of-limits">
+    <Setter Property="Foreground" Value="{StaticResource NkAlarm}" />
+  </Style>
+
+</Styles>

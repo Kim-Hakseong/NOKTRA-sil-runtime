@@ -1,0 +1,17 @@
+bin/
+obj/
+publish/
+*.user
+.DS_Store
+TestResults/
+artifacts/
+
+# Build-kit documents. These drive the local development process and are not part of the
+# product; product documentation is README.md and spec/.
+CLAUDE.md
+CONTEXT.md
+PRD.md
+DESIGN.md
+PROMPT_ralph.md
+RALPH_LOG.md
+.claude/

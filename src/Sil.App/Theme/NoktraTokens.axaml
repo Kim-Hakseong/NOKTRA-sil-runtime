@@ -1,0 +1,55 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+  <!--
+    Noktra design tokens. Single source of truth for colour and type across the app: no view
+    hard-codes a hex value. One accent only — if a second accent appears, "this is the live value"
+    stops reading as a signal and starts reading as decoration.
+  -->
+
+  <!-- Canvas -->
+  <LinearGradientBrush x:Key="NkCanvas" StartPoint="0%,0%" EndPoint="0%,100%">
+    <GradientStop Offset="0" Color="#BCBFC0" />
+    <GradientStop Offset="1" Color="#A9ADAE" />
+  </LinearGradientBrush>
+
+  <!-- Surfaces -->
+  <SolidColorBrush x:Key="NkPanel" Color="#F3F4F5" />
+  <SolidColorBrush x:Key="NkSunk" Color="#E7E9EA" />
+  <SolidColorBrush x:Key="NkPanelEdge" Color="#FFFFFF" />
+  <SolidColorBrush x:Key="NkLegalBar" Color="#EFEEE9" />
+
+  <!-- Ink -->
+  <SolidColorBrush x:Key="NkInk" Color="#0E1113" />
+  <SolidColorBrush x:Key="NkSoftInk" Color="#2B3033" />
+  <SolidColorBrush x:Key="NkMuted" Color="#7E8588" />
+
+  <!-- Lines -->
+  <SolidColorBrush x:Key="NkLine" Color="#CDD1D3" />
+  <SolidColorBrush x:Key="NkFaintLine" Color="#DEE1E2" />
+
+  <!-- Accent (one only) -->
+  <SolidColorBrush x:Key="NkAccent" Color="#1E7C8C" />
+  <SolidColorBrush x:Key="NkAccentBright" Color="#31A9BC" />
+  <SolidColorBrush x:Key="NkWash" Color="#D8E8EA" />
+
+  <!-- Status -->
+  <SolidColorBrush x:Key="NkWarn" Color="#B9862F" />
+  <SolidColorBrush x:Key="NkAlarm" Color="#A8412F" />
+  <SolidColorBrush x:Key="NkReserved" Color="#9AA1A4" />
+
+  <!-- Wordmark -->
+  <SolidColorBrush x:Key="NkWordmark" Color="#262623" />
+  <SolidColorBrush x:Key="NkWordmarkSoft" Color="#8B8B84" />
+
+  <!-- Typography. Inter arrives via WithInterFont() and is the default family. -->
+  <FontFamily x:Key="NkMonoFont">Menlo,Cascadia Mono,Consolas,DejaVu Sans Mono,monospace</FontFamily>
+  <FontFamily x:Key="NkSerifFont">Georgia,Times New Roman,serif</FontFamily>
+
+  <x:Double x:Key="NkMicroSize">9</x:Double>
+  <x:Double x:Key="NkReadoutSize">11</x:Double>
+  <x:Double x:Key="NkReadoutLargeSize">15</x:Double>
+  <x:Double x:Key="NkTitleSize">26</x:Double>
+  <x:Double x:Key="NkGhostSize">58</x:Double>
+
+</ResourceDictionary>
