@@ -153,6 +153,15 @@ public class MainWindowViewModelTests
         vm.Start();
         Assert.True(vm.IsRunning);
 
+        // On a slow runner the pause can land before the host has completed a single
+        // cycle, leaving every channel at exactly 0.0. Wait for evidence that the run
+        // actually advanced — a bounded condition wait, not a fixed sleep.
+        DateTime deadline = DateTime.UtcNow + TimeSpan.FromSeconds(10);
+        while (!vm.Channels.Any(c => c.Value != 0.0) && DateTime.UtcNow < deadline)
+        {
+            await Task.Delay(10);
+        }
+
         await vm.PauseAsync();
 
         Assert.False(vm.IsRunning);
